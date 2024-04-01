@@ -1,19 +1,30 @@
-FROM node:16
+FROM node:20
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+COPY package*.json pnpm-lock.yaml ./
+
+ENV SHELL=/bin/bash
+RUN npm install -g pnpm && pnpm install
 
 COPY . .
 
+# Set up pnpm globally
+ENV PNPM_HOME=/usr/local/bin
+RUN pnpm setup
+
 # Install Prisma CLI
-RUN npm install -g prisma
-RUN npx prisma generate
+RUN pnpm add -g prisma
+
+# Set the target platform and OpenSSL version
+ENV PRISMA_CLI_BINARY_TARGETS=linux-arm64-openssl-3.0.x
+
+# Generate Prisma Client
+RUN prisma generate
 
 EXPOSE 3000
 
 CMD if [ "$ENVIRONMENT" = "development" ]; then \
-      npx prisma migrate deploy; \
+      prisma migrate deploy; \
     fi \
-    && npm run dev
+    && pnpm run dev
