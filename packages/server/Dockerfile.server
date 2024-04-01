@@ -1,0 +1,19 @@
+FROM node:16
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+# Install Prisma CLI
+RUN npm install -g prisma
+RUN npx prisma generate
+
+EXPOSE 3000
+
+CMD if [ "$ENVIRONMENT" = "development" ]; then \
+      npx prisma migrate deploy; \
+    fi \
+    && npm run dev

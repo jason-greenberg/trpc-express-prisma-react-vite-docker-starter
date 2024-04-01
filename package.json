@@ -1,0 +1,18 @@
+{
+  "name": "trpc-express-prisma-react-vite-starter",
+  "version": "1.0.0",
+  "description": "Starter skeleton for a fullstack app with TRPC, Express, Prisma, React, and Vite",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel --filter=client --filter=server run dev",
+    "develop": "docker-compose up --build",
+    "prisma:migrate:dev": "docker-compose exec server npx prisma migrate deploy"
+  },
+  "workspaces": {
+    "packages": [
+      "./packages/client",
+      "./packages/server"
+    ]
+  }
+}
