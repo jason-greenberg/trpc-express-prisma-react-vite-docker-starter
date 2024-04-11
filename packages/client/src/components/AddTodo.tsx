@@ -1,11 +1,11 @@
-import { SetStateAction, useState } from "react";
-import { trpc } from "../lib/trpc";
-import { Button, Pane, TextInput } from "evergreen-ui";
+import { SetStateAction, useState } from 'react'
+import trpc from 'lib/trpc'
+import { Button, Pane, TextInput } from 'evergreen-ui'
 
 export default function AddTodo() {
-  const [title, setTitle] = useState("");
-  const addTodoMutation = trpc.todo.create.useMutation();
-  const trpcContext = trpc.useUtils();
+  const [title, setTitle] = useState('')
+  const addTodoMutation = trpc.todo.create.useMutation()
+  const trpcContext = trpc.useUtils()
   return (
     <Pane>
       <TextInput
@@ -22,15 +22,15 @@ export default function AddTodo() {
             { title: title },
             {
               onSuccess: () => {
-                console.log("created a todo");
-                trpcContext.todo.list.invalidate();
-              },
+                console.log('created a todo')
+                trpcContext.todo.list.invalidate()
+              }
             }
-          );
+          )
         }}
       >
         Add todo
       </Button>
     </Pane>
-  );
+  )
 }

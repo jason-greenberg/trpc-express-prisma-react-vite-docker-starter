@@ -18,9 +18,11 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "server/*": ["../server/*"],
+      "server/*": ["../server/src/*"],
+      "server": ["../server/src"],
+      "lib/*": ["./src/lib/*"],
     }
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }, { "path": "../server"}]
 }

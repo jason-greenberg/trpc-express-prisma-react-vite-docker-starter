@@ -1,15 +1,17 @@
-import { Pane, Heading } from "evergreen-ui";
+import { Pane, Heading, majorScale } from "evergreen-ui";
 import AddTodo from "./AddTodo";
-import ListTodos from "./ListTodos";
+import NavBar from "./NavBar";
 
 export default () => (
-  <Pane>
-    <Pane>
-      <Heading>Vite + React | Express | tRPC</Heading>
-    </Pane>
-    <Pane>
-      <ListTodos />
-      <AddTodo />
+  <Pane width="100%" maxWidth={majorScale(200)}>
+    <NavBar />
+    <Pane
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height={majorScale(80)}
+    >
+      <Heading>Vite + React • Evergreen-UI • Express • tRPC • Prisma</Heading>
     </Pane>
   </Pane>
 );
