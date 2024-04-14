@@ -1,19 +1,19 @@
 import { TRPCError } from '@trpc/server'
-import { verify } from 'jsonwebtoken'
-import { get } from 'env-var'
+import jwt from 'jsonwebtoken'
+import env from 'env-var'
 import trpc from 'trpc'
 
 import { User } from '@prisma/client'
 import userModel from 'trpc/models/user.model'
 
 export const authConfig = {
-  secretKey: get('SECRET_KEY').required().asString(),
-  jwtExpiresIn: get('JWT_EXPIRES_IN').required().asString()
+  secretKey: env.get('SECRET_KEY').required().asString(),
+  jwtExpiresIn: env.get('JWT_EXPIRES_IN').required().asString()
 }
 
 export async function decodeAndVerifyJwtToken(token: string): Promise<User> {
   const parsedToken = token.split(' ')[1]
-  const decoded = verify(parsedToken, authConfig.secretKey)
+  const decoded = jwt.verify(parsedToken, authConfig.secretKey)
   if (userModel.isUser(decoded)) return decoded
   else throw new TRPCError({ code: 'UNAUTHORIZED' })
 }

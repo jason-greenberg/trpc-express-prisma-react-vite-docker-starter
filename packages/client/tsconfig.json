@@ -16,11 +16,10 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": ["vite/client"],
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "server/*": ["../server/src/*"],
-      "server": ["../server/src"],
-      "lib/*": ["./src/lib/*"],
+      "server/*": ["../../server/*"],
+      "server": ["../../server"],
     }
   },
   "include": ["src"],

@@ -1,20 +1,13 @@
 FROM node:20
-
 WORKDIR /app
 
-COPY package*.json pnpm-lock.yaml ./
-
-ENV SHELL=/bin/bash
-RUN npm install -g pnpm &&  --shamefully-hoist
+COPY package*.json yarn.lock ./
+RUN yarn install
 
 COPY . .
 
-# Set up pnpm globally
-ENV PNPM_HOME=/usr/local/bin
-RUN pnpm setup
-
-# Install Prisma CLI
-RUN pnpm add -g prisma
+# Install Prisma CLI & tsx
+RUN yarn global add prisma tsx
 
 # Set the target platform and OpenSSL version
 ENV PRISMA_CLI_BINARY_TARGETS=linux-arm64-openssl-3.0.x
@@ -25,6 +18,6 @@ RUN prisma generate
 EXPOSE 3000
 
 CMD if [ "$ENVIRONMENT" = "development" ]; then \
-      prisma migrate deploy; \
-    fi \
-    && pnpm run dev
+  prisma migrate deploy; \
+fi \
+&& yarn run dev

@@ -1,8 +1,6 @@
 import { inferAsyncReturnType, initTRPC, TRPCError } from '@trpc/server'
 import { decodeAndVerifyJwtToken } from './auth'
 import * as trpcExpress from '@trpc/server/adapters/express'
-import trpc from 'trpc'
-import userModel from 'trpc/models/user.model'
 
 export const createContext = async ({
   req,

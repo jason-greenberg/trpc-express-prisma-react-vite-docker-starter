@@ -5,9 +5,10 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "pnpm --parallel --filter=client --filter=server run dev",
+    "dev": "yarn workspaces run dev",
     "develop": "docker-compose up --build",
-    "prisma:migrate:dev": "docker-compose exec server npx prisma migrate deploy"
+    "prisma:migrate:dev": "docker-compose exec server npx prisma migrate dev",
+    "typecheck": "bash scripts/typecheck.sh"
   },
   "workspaces": {
     "packages": [

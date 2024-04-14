@@ -23,6 +23,10 @@ node_modules
 
 # Dependency directories
 pnpm-lock.yaml
+yarn.lock
+
+# Generated files
+packages/server/src/generated/*
 
 # Prisma sqlite
 *dev.db*

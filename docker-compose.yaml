@@ -34,20 +34,27 @@ services:
     volumes:
       - ./packages/server:/app
       - /app/node_modules
-      - ./.env:/app/.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthcheck"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   client:
     container_name: client
     build:
-      context: ./packages/client 
+      context: ./packages/client
       dockerfile: Dockerfile.client
+    depends_on:
+      server:
+        condition: service_healthy
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
     env_file:
       - .env
     ports:
       - '5173:5173'
-    volumes: 
-      - ./packages/client:/app
+    volumes:
+      - .:/app
       - /app/node_modules
       - ./.env:/app/.env

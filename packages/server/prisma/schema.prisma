@@ -4,11 +4,15 @@
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
+  output        = "../node_modules/.prisma/client"
 }
 
 generator zod {
-  provider = "npx zod-prisma-types"
-  output   = "../src/generated/zod"
+  provider                  = "npx zod-prisma-types"
+  output                    = "../src/generated/zod"
+  useMultipleFiles          = true
+  useTypeAssertions         = true
+  createRelationValuesTypes = true
 }
 
 datasource db {
@@ -25,7 +29,14 @@ model Todo {
 }
 
 model User {
-  id    String  @id @default(cuid())
-  email String  @unique
-  name  String?
+  id       String    @id @default(cuid())
+  email    String    @unique
+  name     String?
+  password Password?
+}
+
+model Password {
+  hash   String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 }

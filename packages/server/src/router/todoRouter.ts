@@ -1,11 +1,10 @@
-import prisma from 'lib/prisma'
+import prisma from 'sdks/prisma'
 import trpc from 'trpc'
 import { procedure } from 'trpc'
 import { z } from 'zod'
 
 export const todoRouter = trpc.router({
-  list: procedure
-    .query(({ ctx }) => {
+  list: procedure.query(({ ctx }) => {
     console.log(ctx.user)
     // const todos = await prisma.todo.findMany()
     // return todos
