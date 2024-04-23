@@ -16,23 +16,22 @@ const signIn = async ({
     message: 'Invalid username or password'
   })
   const user = await prisma.user.findUniqueOrThrow({
-    where: {
-      email
-    },
-    include: {
-      password: true
-    }
+    where: { email },
+    include: { password: true }
   })
   if (!user || !user.password) throw authError
 
   const isValid = await bcrypt.compare(password, user.password.hash)
-
   if (!isValid) throw authError
 
   // generate token
-  const accessToken = jwt.sign({ id: user.id }, authConfig.secretKey, {
-    expiresIn: authConfig.jwtExpiresIn
-  })
+  const accessToken = jwt.sign(
+    { id: user.id, email: user.email, name: user.name }, // token body
+    authConfig.secretKey,
+    {
+      expiresIn: authConfig.jwtExpiresIn
+    }
+  )
 
   return {
     id: user.id,

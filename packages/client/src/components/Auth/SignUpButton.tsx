@@ -45,7 +45,7 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
       content={
         <Pane
           width={320}
-          paddingX={majorScale(4)}
+          paddingX={majorScale(3)}
           paddingY={majorScale(3)}
           display="flex"
           alignItems="center"
@@ -56,7 +56,7 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
           elevation={1}
           borderRadius={4}
         >
-          <Heading size={600} marginBottom={majorScale(2)}>
+          <Heading size={700} fontWeight={400}>
             Sign Up
           </Heading>
           <TextInput

@@ -13,7 +13,9 @@ export default ({ mode }) => {
         'server/*': path.resolve(__dirname, '../../server/*'),
         components: path.resolve(__dirname, './src/components'),
         lib: path.resolve(__dirname, './src/lib'),
-        assets: path.resolve(__dirname, './src/assets')
+        assets: path.resolve(__dirname, './src/assets'),
+        useQueryClient: path.resolve(__dirname, './src/useQueryClient.ts'),
+        App: path.resolve(__dirname, './src/App.tsx')
       }
     },
     server: {

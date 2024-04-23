@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { trpc } from 'lib/trpc'
-import { Button, majorScale, Pane, TextInput, Heading, toaster, Popover, Position } from 'evergreen-ui'
+import { Button, majorScale, Pane, TextInput, Heading, toaster, Popover, Position, minorScale } from 'evergreen-ui'
 
 type SignInButtonProps = {
   isOpen: boolean
@@ -36,7 +36,7 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
       content={
         <Pane
           width={320}
-          paddingX={majorScale(4)}
+          paddingX={majorScale(3)}
           paddingY={majorScale(3)}
           display="flex"
           alignItems="center"
@@ -47,7 +47,7 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
           elevation={1}
           borderRadius={4}
         >
-          <Heading size={600} marginBottom={majorScale(2)}>
+          <Heading size={700} fontWeight={400}>
             Sign In
           </Heading>
           <TextInput

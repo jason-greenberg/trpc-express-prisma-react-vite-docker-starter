@@ -1,6 +1,6 @@
-import { Pane, Heading, majorScale, Image, minorScale } from 'evergreen-ui'
-import NavBar from './NavBar'
-import TechStack from './TechStack'
+import { Pane, majorScale } from 'evergreen-ui'
+import NavBar from 'components/NavBar'
+import TechStack from 'components/TechStack'
 
 export default () => (
   <Pane width="100%" maxWidth={majorScale(200)} height="100%" maxHeight={majorScale(200)}>

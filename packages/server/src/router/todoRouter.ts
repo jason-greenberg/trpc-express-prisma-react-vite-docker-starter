@@ -5,7 +5,6 @@ import { z } from 'zod'
 
 export const todoRouter = trpc.router({
   list: protectedProcedure.query(({ ctx }) => {
-    console.log(ctx.user)
     // const todos = await prisma.todo.findMany()
     // return todos
     return prisma.todo.findMany()

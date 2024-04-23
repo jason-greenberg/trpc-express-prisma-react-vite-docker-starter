@@ -3,9 +3,10 @@ import {
   Heading,
   ListItem,
   Paragraph,
+  Spinner,
   UnorderedList,
 } from "evergreen-ui";
-import { trpc } from "../lib/trpc";
+import { trpc } from "lib/trpc";
 
 export default function ListTodos() {
   function handleDelete() {}
@@ -21,7 +22,7 @@ export default function ListTodos() {
   }
 
   if (response.isLoading) {
-    return <Heading>Loading...</Heading>;
+    return <Spinner />;
   }
 
   return (

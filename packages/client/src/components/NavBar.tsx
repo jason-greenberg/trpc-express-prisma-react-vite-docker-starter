@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import SignUpButton from 'components/Auth/SignUpButton'
-import { trpc } from 'lib/trpc'
 import { majorScale, Pane, Heading, toaster } from 'evergreen-ui'
-import SignInButton from './Auth/SignInButton'
+import SignInButton from 'components/Auth/SignInButton'
 
 export default () => {
   const [signInIsOpen, setSignInIsOpen] = useState(false)
