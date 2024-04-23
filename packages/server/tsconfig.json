@@ -7,7 +7,6 @@
     "sourceMap": true,
     "rootDir": "./src",
     "baseUrl": "./src",
-    "paths": {},
     "esModuleInterop": true,
     "outDir": "./build",
     "composite": true,

@@ -1,5 +1,5 @@
 import { SetStateAction, useState } from 'react'
-import trpc from 'lib/trpc'
+import { trpc } from 'lib/trpc'
 import { Button, Pane, TextInput } from 'evergreen-ui'
 
 export default function AddTodo() {

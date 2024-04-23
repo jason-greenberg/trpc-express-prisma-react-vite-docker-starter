@@ -1,5 +1,8 @@
 import prisma from 'sdks/prisma'
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import { TRPCError } from '@trpc/server'
+import { authConfig } from 'lib/auth'
 
 const signIn = async ({
   email,
@@ -8,7 +11,10 @@ const signIn = async ({
   email: string
   password: string
 }) => {
-  const INVALID_CREDENTIALS = 'Invalid username or password'
+  const authError = new TRPCError({
+    code: 'UNAUTHORIZED',
+    message: 'Invalid username or password'
+  })
   const user = await prisma.user.findUniqueOrThrow({
     where: {
       email
@@ -17,13 +23,23 @@ const signIn = async ({
       password: true
     }
   })
-  if (!user.password) throw new Error(INVALID_CREDENTIALS)
+  if (!user || !user.password) throw authError
 
   const isValid = await bcrypt.compare(password, user.password.hash)
 
-  if (!isValid) throw new Error(INVALID_CREDENTIALS)
+  if (!isValid) throw authError
 
-  return user
+  // generate token
+  const accessToken = jwt.sign({ id: user.id }, authConfig.secretKey, {
+    expiresIn: authConfig.jwtExpiresIn
+  })
+
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    accessToken
+  }
 }
 
 const signUp = async ({

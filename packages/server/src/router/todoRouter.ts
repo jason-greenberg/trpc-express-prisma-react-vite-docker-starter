@@ -1,16 +1,16 @@
 import prisma from 'sdks/prisma'
 import trpc from 'trpc'
-import { procedure } from 'trpc'
+import { protectedProcedure } from 'trpc'
 import { z } from 'zod'
 
 export const todoRouter = trpc.router({
-  list: procedure.query(({ ctx }) => {
+  list: protectedProcedure.query(({ ctx }) => {
     console.log(ctx.user)
     // const todos = await prisma.todo.findMany()
     // return todos
     return prisma.todo.findMany()
   }),
-  create: procedure
+  create: protectedProcedure
     .input(z.object({ title: z.string() }))
     .mutation(({ input }) => {
       const title = input.title
@@ -21,7 +21,7 @@ export const todoRouter = trpc.router({
         }
       })
     }),
-  delete: procedure
+  delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ input }) => {
       return prisma.todo.delete({
@@ -30,7 +30,7 @@ export const todoRouter = trpc.router({
         }
       })
     }),
-  update: procedure
+  update: protectedProcedure
     .input(z.object({ id: z.string(), isCompleted: z.boolean() }))
     .mutation(({ ctx, input }) => {
       return prisma.todo.update({

@@ -12,7 +12,7 @@ pids
 *.pid.lock
 postgres_data/*
 
-
+data
 node_modules
 
 */node_modules

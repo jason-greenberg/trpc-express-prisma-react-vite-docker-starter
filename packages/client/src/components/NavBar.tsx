@@ -1,29 +1,26 @@
-import { SetStateAction, useState } from "react";
-import { trpc } from "../lib/trpc";
-import {
-  Button,
-  majorScale,
-  Pane,
-  TextInput,
-  Heading,
-  toaster,
-} from "evergreen-ui";
+import { useState } from 'react'
+import SignUpButton from 'components/Auth/SignUpButton'
+import { trpc } from 'lib/trpc'
+import { majorScale, Pane, Heading, toaster } from 'evergreen-ui'
+import SignInButton from './Auth/SignInButton'
 
-export default () => (
-  <Pane
-    display="flex"
-    width="100%"
-    justifyContent="space-between"
-    alignItems="center"
-    padding={majorScale(2)}
-  >
-    <Heading>Nav Bar</Heading>
-    <Button
-      appearance="primary"
-      cursor="pointer"
-      onClick={() => toaster.success("To Do!")}
+export default () => {
+  const [signInIsOpen, setSignInIsOpen] = useState(false)
+  const [signUpIsOpen, setSignUpIsOpen] = useState(false)
+
+  return (
+    <Pane
+      display="flex"
+      width="100%"
+      justifyContent="space-between"
+      alignItems="center"
+      padding={majorScale(2)}
     >
-      Sign Up
-    </Button>
-  </Pane>
-);
+      <Heading>Nav Bar</Heading>
+      <Pane display="flex" gap={majorScale(2)}>
+        <SignInButton isOpen={signInIsOpen} setIsOpen={setSignInIsOpen} />
+        <SignUpButton isOpen={signUpIsOpen} setIsOpen={setSignUpIsOpen} />
+      </Pane>
+    </Pane>
+  )
+}

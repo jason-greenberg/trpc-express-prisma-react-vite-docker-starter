@@ -1,20 +1,22 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import dotenv from 'dotenv';
-import fs from 'fs';
-import path from 'path';
-
-// Load .env file from the same directory
-const envConfig = dotenv.parse(fs.readFileSync(path.resolve(__dirname, '.env')));
-
-// Make environment variables available to Vite
-for (const k in envConfig) {
-  if (k.startsWith('VITE_')) {
-    process.env[k] = envConfig[k];
-  }
-}
+import { defineConfig, loadEnv } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-});
+export default ({ mode }) => {
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
+  return defineConfig({
+    plugins: [react()],
+    resolve: {
+      alias: {
+        server: path.resolve(__dirname, '../../server'),
+        'server/*': path.resolve(__dirname, '../../server/*'),
+        components: path.resolve(__dirname, './src/components'),
+        lib: path.resolve(__dirname, './src/lib')
+      }
+    },
+    server: {
+      port: parseInt(process.env.VITE_CLIENT_PORT)
+    }
+  })
+}

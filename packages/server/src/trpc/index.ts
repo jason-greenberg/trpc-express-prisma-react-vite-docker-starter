@@ -22,7 +22,7 @@ const isAuthenticated = trpc.middleware(({ next, ctx }) => {
   })
 })
 
-export default trpc
 export const router = trpc.router
-export const procedure = trpc.procedure.use(isAuthenticated)
-export const noAuthProcedure = trpc.procedure
+export const protectedProcedure = trpc.procedure.use(isAuthenticated)
+export const publicProcedure = trpc.procedure
+export default trpc

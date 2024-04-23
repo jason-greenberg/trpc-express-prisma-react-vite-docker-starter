@@ -8,7 +8,9 @@ export const createContext = async ({
 }: trpcExpress.CreateExpressContextOptions) => {
   async function getUser() {
     if (req.headers.authorization) {
-      return await decodeAndVerifyJwtToken(req.headers.authorization)
+      const user = await decodeAndVerifyJwtToken(req.headers.authorization)
+      console.log('Decoded user:', user);
+      return user
     }
     return null
   }

@@ -13,9 +13,11 @@ services:
       - '5432:5432'
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 5s
+      interval: 3s
       timeout: 5s
-      retries: 5
+      retries: 10
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
 
   server:
     container_name: server
@@ -27,18 +29,20 @@ services:
         condition: service_healthy
     environment:
       - DATABASE_URL=${DATABASE_URL}
+      - HOST=${HOST}
+      - SERVER_PORT=${SERVER_PORT}
     env_file:
       - .env
     ports:
-      - '3000:3000'
+      - '3001:3001'
     volumes:
       - ./packages/server:/app
       - /app/node_modules
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/healthcheck"]
+      test: ["CMD", "curl", "-f", "http://${HOST}:${SERVER_PORT}/healthcheck"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   client:
     container_name: client
@@ -50,10 +54,11 @@ services:
         condition: service_healthy
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
+      - VITE_CLIENT_PORT=${VITE_CLIENT_PORT}
     env_file:
       - .env
     ports:
-      - '5173:5173'
+      - '${VITE_CLIENT_PORT}:${VITE_CLIENT_PORT}'
     volumes:
       - .:/app
       - /app/node_modules

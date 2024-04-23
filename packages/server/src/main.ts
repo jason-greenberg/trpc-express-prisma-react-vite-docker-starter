@@ -4,8 +4,11 @@ import { appRouter } from 'router/index'
 import cors from 'cors'
 import { createContext } from 'lib/context'
 
+const VITE_APP_URL = process.env.VITE_APP_URL
+const PORT: number = Number(process.env.SERVER_PORT) || 3001
+
 const app: Application = express()
-app.use(cors())
+app.use(cors({ origin: `${VITE_APP_URL}`, credentials: true }))
 
 app.get('/healthcheck', (req: Request, res: Response, next: NextFunction) => {
   res.json({ message: 'OK' })
@@ -19,7 +22,6 @@ app.use(
   })
 )
 
-const PORT: number = Number(process.env.PORT) || 3000
 app.listen(PORT, () => {
-  console.log(`Server running on Port: ${PORT}`)
+  console.log(`🚀 Server running on Port ${PORT}`)
 })
