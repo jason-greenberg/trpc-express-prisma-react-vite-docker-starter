@@ -1,17 +1,19 @@
-import { Pane, Heading, majorScale } from "evergreen-ui";
-import AddTodo from "./AddTodo";
-import NavBar from "./NavBar";
+import { Pane, Heading, majorScale, Image, minorScale } from 'evergreen-ui'
+import NavBar from './NavBar'
+import TechStack from './TechStack'
 
 export default () => (
-  <Pane width="100%" maxWidth={majorScale(200)}>
+  <Pane width="100%" maxWidth={majorScale(200)} height="100%" maxHeight={majorScale(200)}>
     <NavBar />
     <Pane
       display="flex"
       justifyContent="center"
       alignItems="center"
-      height={majorScale(80)}
+      flexDirection="column"
+      gap={majorScale(5)}
+      height={majorScale(90)}
     >
-      <Heading>Vite + React • Evergreen-UI • Express • tRPC • Prisma</Heading>
+      <TechStack />
     </Pane>
   </Pane>
-);
+)
