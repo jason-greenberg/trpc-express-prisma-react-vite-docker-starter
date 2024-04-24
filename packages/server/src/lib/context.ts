@@ -1,13 +1,22 @@
 import { inferAsyncReturnType, initTRPC, TRPCError } from '@trpc/server';
-import { decodeAndVerifyJwtToken } from './auth';
+import { decodeAndVerifyJwtToken } from 'lib/auth';
+import jwt from 'jsonwebtoken';
 import * as trpcExpress from '@trpc/server/adapters/express';
 
 export const createContext = async ({ req, res }: trpcExpress.CreateExpressContextOptions) => {
   async function getUser() {
     const accessToken = req.cookies.accessToken;
-    if (accessToken) {
-      const user = await decodeAndVerifyJwtToken(accessToken);
-      return user;
+    // Do not check for user if the request is for signing in or signing up
+    if (accessToken && !['/auth.signIn', '/auth.signUp'].includes(req.path)) {
+      console.log('path', req.path)
+      try {
+        const user = await decodeAndVerifyJwtToken(accessToken);
+        return user;
+      } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+          res.clearCookie('accessToken');
+        }
+      }
     }
     return null;
   }

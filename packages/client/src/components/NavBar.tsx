@@ -1,11 +1,18 @@
 import { useState } from 'react'
 import SignUpButton from 'components/Auth/SignUpButton'
-import { majorScale, Pane, Heading, toaster } from 'evergreen-ui'
+import {
+  majorScale,
+  Pane,
+  Heading,
+  Button,
+} from 'evergreen-ui'
 import SignInButton from 'components/Auth/SignInButton'
+import AboutSideSheet from 'views/Home/AboutSideSheet'
 
 export default () => {
   const [signInIsOpen, setSignInIsOpen] = useState(false)
   const [signUpIsOpen, setSignUpIsOpen] = useState(false)
+  const [sideSheetIsShown, setSideSheetIsShown] = useState(false)
 
   return (
     <Pane
@@ -15,7 +22,25 @@ export default () => {
       alignItems="center"
       padding={majorScale(2)}
     >
-      <Heading>Nav Bar</Heading>
+      <AboutSideSheet
+        isShown={sideSheetIsShown}
+        setIsShown={setSideSheetIsShown}
+      />
+      <Button
+        cursor="pointer"
+        appearance="minimal"
+        padding={majorScale(1)}
+        onClick={() => setSideSheetIsShown(true)}
+      >
+        <Heading
+          size={500}
+          textTransform="uppercase"
+          fontWeight={400}
+          letterSpacing={0.4}
+        >
+          About
+        </Heading>
+      </Button>
       <Pane display="flex" gap={majorScale(2)}>
         <SignInButton isOpen={signInIsOpen} setIsOpen={setSignInIsOpen} />
         <SignUpButton isOpen={signUpIsOpen} setIsOpen={setSignUpIsOpen} />

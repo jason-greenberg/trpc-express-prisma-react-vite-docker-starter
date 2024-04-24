@@ -10,6 +10,15 @@ export const authConfig = {
   jwtExpiresIn: env.get('JWT_EXPIRES_IN').required().asString()
 }
 
+export const generateJwtToken = (user: User) =>
+  jwt.sign(
+    { id: user.id, email: user.email, name: user.name }, // token body
+    authConfig.secretKey,
+    {
+      expiresIn: authConfig.jwtExpiresIn
+    }
+  )
+
 export async function decodeAndVerifyJwtToken(token: string): Promise<User> {
   const decoded = jwt.verify(token, authConfig.secretKey)
   if (userModel.isUser(decoded)) return decoded

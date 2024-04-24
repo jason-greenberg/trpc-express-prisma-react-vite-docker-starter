@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query'
-import Home from 'components/Home'
+import Home from 'views/Home'
 import ListTodos from 'components/ListTodos';
 import { trpc } from 'lib/trpc'
 import { useQueryTrpcClient } from 'useQueryClient'
