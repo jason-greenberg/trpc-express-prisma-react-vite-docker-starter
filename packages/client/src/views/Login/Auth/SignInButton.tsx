@@ -9,33 +9,35 @@ import {
   toaster,
   Popover,
   Position,
-  Text
 } from 'evergreen-ui'
+import { useNavigate } from 'react-router-dom'
 
-type SignUpButtonProps = {
+type SignInButtonProps = {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }
 
-export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
+export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const navigate = useNavigate()
 
-  const mutation = trpc.auth.signUp.useMutation({
+  const signInMutation = trpc.auth.signIn.useMutation({
     onSuccess: () => {
-      toaster.success('Sign-up successful!')
+      toaster.success('Sign-in successful!')
+      navigate('/')
     },
     onError: (error) => {
       console.error(error)
-      toaster.danger('Sign-up failed, please try again.')
+      toaster.danger('Sign-in failed, please try again.')
     }
   })
 
-  const handleSignUp = async () => {
-    await mutation.mutateAsync({ email, password })
+  const handleSignIn = async () => {
+    await signInMutation.mutateAsync({ email, password })
     setIsOpen(false)
   }
+
   return (
     <Popover
       isShown={isOpen}
@@ -57,7 +59,7 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
           borderRadius={4}
         >
           <Heading size={700} fontWeight={400}>
-            Sign Up
+            Sign In
           </Heading>
           <TextInput
             width="100%"
@@ -76,33 +78,24 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
               setPassword(e.target.value)
             }
           />
-          <TextInput
-            width="100%"
-            placeholder="Confirm Password"
-            type="password"
-            value={confirmPassword}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setConfirmPassword(e.target.value)
-            }
-          />
           <Button
             appearance="primary"
             intent="success"
-            onClick={handleSignUp}
+            onClick={handleSignIn}
             width="100%"
           >
-            Sign Up
+            Sign In
           </Button>
         </Pane>
       }
     >
       <Button
-        appearance={isOpen ? 'minimal' : 'primary'}
-        intent={isOpen ? 'none' : 'success'}
+        intent={isOpen ? 'none' : 'none'}
         cursor="pointer"
         onClick={() => setIsOpen(!isOpen)}
+        isLoading={signInMutation.isLoading}
       >
-        Sign Up
+        Sign In
       </Button>
     </Popover>
   )

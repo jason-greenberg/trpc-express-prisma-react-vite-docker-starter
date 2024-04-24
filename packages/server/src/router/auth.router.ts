@@ -1,4 +1,4 @@
-import { publicProcedure, router } from 'trpc'
+import { publicProcedure, protectedProcedure, router } from 'trpc'
 import { userCredentialsSchema } from 'types/auth.dtos'
 import userModel from 'trpc/models/user.model'
 
@@ -23,5 +23,9 @@ export const authRouter = router({
       })
       ctx.res.cookie('accessToken', user.accessToken, { httpOnly: true })
       ctx.user = user
-    })
+    }),
+
+  getUser: protectedProcedure.query(({ ctx }) => {
+    return ctx.user
+  })
 })

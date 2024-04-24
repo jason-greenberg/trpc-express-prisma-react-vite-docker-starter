@@ -50,7 +50,7 @@ export default () => (
           size={900}
           textTransform="uppercase"
           fontWeight={300}
-          letterSpacing={0.4}
+          letterSpacing={0.5}
           marginBottom={minorScale(-1)}
         >
           {name}

@@ -1,13 +1,8 @@
 import { useState } from 'react'
-import SignUpButton from 'components/Auth/SignUpButton'
-import {
-  majorScale,
-  Pane,
-  Heading,
-  Button,
-} from 'evergreen-ui'
-import SignInButton from 'components/Auth/SignInButton'
-import AboutSideSheet from 'views/Home/AboutSideSheet'
+import SignUpButton from 'views/Login/Auth/SignUpButton'
+import { majorScale, Pane, Heading, Button } from 'evergreen-ui'
+import SignInButton from 'views/Login/Auth/SignInButton'
+import AboutSideSheet from 'views/Login/AboutSideSheet'
 
 export default () => {
   const [signInIsOpen, setSignInIsOpen] = useState(false)

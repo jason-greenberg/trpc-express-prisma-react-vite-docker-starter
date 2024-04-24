@@ -7,15 +7,28 @@ import {
   Card,
   Link,
   Image,
-  minorScale
+  minorScale,
+  UnorderedList,
+  ListItem,
+  Elevation,
+  Text,
+  Li
 } from 'evergreen-ui'
 
-import linkedIn from 'views/Home/assets/linkedin-logo.png'
-import github from 'views/Home/assets/gh-logo.png'
+import linkedIn from 'views/Login/assets/linkedin-logo.png'
+import github from 'views/Login/assets/gh-logo.png'
 
 export type Props = {
   isShown: boolean
   setIsShown: (arg: boolean) => void
+}
+
+const cardProps = {
+  backgroundColor: 'white',
+  elevation: 0 as Elevation,
+  display: 'flex',
+  justifyContent: 'center',
+  padding: majorScale(2)
 }
 
 export default ({ isShown, setIsShown }: Props) => (
@@ -41,19 +54,60 @@ export default ({ isShown, setIsShown }: Props) => (
         </Heading>
       </Pane>
     </Pane>
-    <Pane flex="1" background="tint1" padding={16}>
-      <Card
-        backgroundColor="white"
-        elevation={0}
-        display="flex"
-        justifyContent="center"
-        padding={majorScale(2)}
-      >
+    <Pane
+      display="flex"
+      flexDirection="column"
+      flex="1"
+      background="tint1"
+      padding={16}
+      gap={16}
+    >
+      <Card {...cardProps}>
         <Pane display="flex" flexDirection="column" gap={majorScale(2)}>
           <Paragraph>
-            I made this skeleton to help me get started with tRPC, using some
-            of my current favorite tools.{' '}
-            {`Please enjoy this skeleton as much as I did building it :)`}
+            This is a designed to be a turn-key solution, with the following
+            features implemented:
+          </Paragraph>
+          <Pane>
+            <Heading size={500} fontWeight={400}>
+              User Management
+            </Heading>
+            <UnorderedList>
+              <ListItem>
+                <Text>Login, logout, and registration with JWT tokens</Text>
+              </ListItem>
+              <ListItem>
+                <Text>
+                  Protected routes: both protected client-side routing and
+                  protected server-side procedure calls
+                </Text>
+              </ListItem>
+            </UnorderedList>
+          </Pane>
+          <Pane>
+            <Heading size={500} fontWeight={400}>
+              Containerization
+            </Heading>
+            <UnorderedList>
+              <ListItem>
+                <Text>
+                  Dockerfiles for client and server, with docker-compose.yaml
+                  for easy deployment
+                </Text>
+              </ListItem>
+              <ListItem>
+                <Text>Containerized Postgres database for development</Text>
+              </ListItem>
+            </UnorderedList>
+          </Pane>
+        </Pane>
+      </Card>
+      <Card {...cardProps}>
+        <Pane display="flex" flexDirection="column" gap={majorScale(2)}>
+          <Paragraph>
+            I built this to help me get started with tRPC, using some of my
+            current favorite tools. Please enjoy this skeleton as much as I
+            enjoyed building it!
           </Paragraph>
           <Paragraph>
             Feel free to connect if you have any questions or suggestions.
