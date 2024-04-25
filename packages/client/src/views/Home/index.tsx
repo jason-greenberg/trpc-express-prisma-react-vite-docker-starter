@@ -1,20 +1,15 @@
-import { Pane, Heading } from 'evergreen-ui';
+import { Pane, Heading } from 'evergreen-ui'
+import Center from 'components/CenterPage'
 
 export default () => (
-  <Pane 
-    width="100%" 
-    height="100vh" 
-    display="flex" 
-    justifyContent="center" 
-    alignItems="center"
-  >
-    <Heading 
-      size={900} 
-      fontWeight={400} 
-      textTransform="uppercase" 
+  <Center>
+    <Heading
+      size={900}
+      fontWeight={400}
+      textTransform="uppercase"
       textAlign="center"
     >
       Home
     </Heading>
-  </Pane>
-);
+  </Center>
+)
