@@ -1,7 +1,6 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
   "main": "./build/src/index.js",
   "type": "module",
   "scripts": {

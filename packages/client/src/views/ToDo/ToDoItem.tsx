@@ -37,7 +37,6 @@ const ToDoItem = ({ todo, strikeThrough, ...rest }: ToDoItemProps) => {
 
   return (
     <Pane
-      key={todo.id}
       display="flex"
       alignItems="center"
       justifyContent="space-between"

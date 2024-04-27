@@ -8,28 +8,26 @@ export const authRouter = router({
     .mutation(async ({ input, ctx }) => {
       const user = await userModel.auth.signUp({
         email: input.email,
-        password: input.password
+        password: input.password,
       })
       ctx.res.cookie('accessToken', user.accessToken, { httpOnly: true })
       ctx.user = user
     }),
-
   signIn: publicProcedure
     .input(userCredentialsSchema)
     .mutation(async ({ input, ctx }) => {
       const user = await userModel.auth.signIn({
         email: input.email,
-        password: input.password
+        password: input.password,
       })
       ctx.res.cookie('accessToken', user.accessToken, { httpOnly: true })
       ctx.user = user
     }),
-
   getUser: publicProcedure.query(({ ctx }) => {
     return ctx.user
   }),
-
-  logout: protectedProcedure.mutation(({ ctx }) => {
+  logout: publicProcedure.mutation(({ ctx }) => {
     ctx.res.clearCookie('accessToken')
-  })
+    ctx.user = null
+  }),
 })

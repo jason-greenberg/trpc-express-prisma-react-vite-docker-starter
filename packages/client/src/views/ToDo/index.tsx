@@ -59,7 +59,7 @@ export default () => {
         </Heading>
         {todos.map((todo) => {
           if (todo.isCompleted) return null
-          return <ToDoItem todo={todo} />
+          return <ToDoItem key={todo.id} todo={todo} />
         })}
         <Pane display="flex" width={majorScale(50)} justifyContent="center">
           <TextInput
@@ -103,7 +103,7 @@ export default () => {
           </Heading>
           {todos.map((todo) => {
             if (!todo.isCompleted) return null
-            return <ToDoItem todo={todo} strikeThrough />
+            return <ToDoItem key={todo.id} todo={todo} strikeThrough />
           })}
         </>
       )}

@@ -22,9 +22,11 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const navigate = useNavigate()
+  const utils = trpc.useUtils()
 
   const signUp = trpc.auth.signUp.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await utils.auth.getUser.invalidate()
       toaster.success('Sign-up successful!')
       navigate('/todo')
     },
