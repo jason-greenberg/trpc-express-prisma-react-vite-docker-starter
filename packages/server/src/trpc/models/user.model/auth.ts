@@ -2,6 +2,8 @@ import prisma from 'sdks/prisma'
 import bcrypt from 'bcryptjs'
 import { TRPCError } from '@trpc/server'
 import { generateJwtToken } from 'lib/auth'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
+import { User } from '@prisma/client'
 
 const signIn = async ({
   email,
@@ -41,16 +43,31 @@ const signUp = async ({
   password: string
 }) => {
   const hash = await bcrypt.hash(password, 10)
-  const user = await prisma.user.create({
-    data: {
-      email,
-      password: {
-        create: {
-          hash
-        }
+  let user: User | null = null
+  try {
+    user = await prisma.user.create({
+      data: {
+        email,
+        password: { create: { hash } }
       }
+    })
+  } catch (error) {
+    if (
+      error instanceof PrismaClientKnownRequestError &&
+      error.code === 'P2002' &&
+      Array.isArray(error.meta?.target) &&
+      error.meta?.target?.includes('email')
+    ) {
+      throw new TRPCError({
+        code: 'CONFLICT',
+        message: 'Email already in use'
+      })
     }
-  })
+    throw new TRPCError({
+      code: 'INTERNAL_SERVER_ERROR',
+      message: 'Something went wrong'
+    })
+  }
   const accessToken = generateJwtToken(user)
   return {
     id: user.id,

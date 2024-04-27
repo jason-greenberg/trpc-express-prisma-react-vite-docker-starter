@@ -23,19 +23,27 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
   const [confirmPassword, setConfirmPassword] = useState('')
   const navigate = useNavigate()
 
-  const signUpMutation = trpc.auth.signUp.useMutation({
+  const signUp = trpc.auth.signUp.useMutation({
     onSuccess: () => {
       toaster.success('Sign-up successful!')
       navigate('/todo')
     },
     onError: (error) => {
       console.error(error)
-      toaster.danger('Sign-up failed, please try again.')
-    }
+      if (error.data?.code === 'CONFLICT') {
+        toaster.danger(error.message)
+      } else {
+        toaster.danger('Sign-up failed, please try again.')
+      }
+    },
   })
 
   const handleSignUp = async () => {
-    await signUpMutation.mutateAsync({ email, password })
+    if (password !== confirmPassword) {
+      toaster.danger('Passwords do not match.')
+      return
+    }
+    await signUp.mutateAsync({ email, password })
     setIsOpen(false)
   }
   return (
@@ -91,6 +99,7 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
             appearance="primary"
             intent="success"
             onClick={handleSignUp}
+            isLoading={signUp.isLoading}
             width="100%"
           >
             Sign Up
@@ -103,7 +112,6 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
         intent={isOpen ? 'none' : 'success'}
         cursor="pointer"
         onClick={() => setIsOpen(!isOpen)}
-        isLoading={signUpMutation.isLoading}
       >
         Sign Up
       </Button>

@@ -25,7 +25,11 @@ export const authRouter = router({
       ctx.user = user
     }),
 
-  getUser: protectedProcedure.query(({ ctx }) => {
+  getUser: publicProcedure.query(({ ctx }) => {
     return ctx.user
+  }),
+
+  logout: protectedProcedure.mutation(({ ctx }) => {
+    ctx.res.clearCookie('accessToken')
   })
 })

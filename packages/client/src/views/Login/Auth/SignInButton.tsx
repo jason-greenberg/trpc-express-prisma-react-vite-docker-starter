@@ -22,7 +22,7 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  const signInMutation = trpc.auth.signIn.useMutation({
+  const signIn = trpc.auth.signIn.useMutation({
     onSuccess: () => {
       toaster.success('Sign-in successful!')
       navigate('/todo')
@@ -34,7 +34,7 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
   })
 
   const handleSignIn = async () => {
-    await signInMutation.mutateAsync({ email, password })
+    await signIn.mutateAsync({ email, password })
     setIsOpen(false)
   }
 
@@ -82,6 +82,7 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
             appearance="primary"
             intent="success"
             onClick={handleSignIn}
+            isLoading={signIn.isLoading}
             width="100%"
           >
             Sign In
@@ -93,7 +94,6 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
         intent={isOpen ? 'none' : 'none'}
         cursor="pointer"
         onClick={() => setIsOpen(!isOpen)}
-        isLoading={signInMutation.isLoading}
       >
         Sign In
       </Button>

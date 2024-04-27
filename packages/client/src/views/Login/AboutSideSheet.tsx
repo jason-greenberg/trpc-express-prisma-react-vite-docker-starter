@@ -65,8 +65,8 @@ export default ({ isShown, setIsShown }: Props) => (
       <Card {...cardProps}>
         <Pane display="flex" flexDirection="column" gap={majorScale(2)}>
           <Paragraph>
-            This is a designed to be a turn-key solution, with the following
-            features implemented:
+            This skeleton is designed to be a turn-key solution, with the
+            following features implemented:
           </Paragraph>
           <Pane>
             <Heading size={500} fontWeight={400}>
@@ -97,6 +97,24 @@ export default ({ isShown, setIsShown }: Props) => (
               </ListItem>
               <ListItem>
                 <Text>Containerized Postgres database for development</Text>
+              </ListItem>
+            </UnorderedList>
+          </Pane>
+          <Pane>
+            <Heading size={500} fontWeight={400}>
+              Example ToDo List
+            </Heading>
+            <UnorderedList>
+              <ListItem>
+                <Text>
+                  A simple ToDo list example with client-side state management
+                </Text>
+              </ListItem>
+              <ListItem>
+                <Text>
+                  Demonstrates how to use tRPC to interact with the server as
+                  well as simple cache-invalidation patterns
+                </Text>
               </ListItem>
             </UnorderedList>
           </Pane>
