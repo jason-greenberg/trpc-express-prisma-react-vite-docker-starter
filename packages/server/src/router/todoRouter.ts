@@ -2,20 +2,21 @@ import prisma from 'sdks/prisma'
 import trpc from 'trpc'
 import { protectedProcedure } from 'trpc'
 import { z } from 'zod'
+import { TodoCreateInputSchema } from 'generated/zod'
 
 export const todoRouter = trpc.router({
-  list: protectedProcedure.query(({ ctx }) => {
-    // const todos = await prisma.todo.findMany()
-    // return todos
-    return prisma.todo.findMany()
-  }),
+  list: protectedProcedure.query(() => prisma.todo.findMany({
+    orderBy: {
+      updatedAt: 'asc'
+    }
+  })),
   create: protectedProcedure
     .input(z.object({ title: z.string() }))
     .mutation(({ input }) => {
       const title = input.title
       return prisma.todo.create({
         data: {
-          title: title,
+          title,
           isCompleted: false
         }
       })

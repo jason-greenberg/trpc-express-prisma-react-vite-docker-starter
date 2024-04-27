@@ -1,69 +1,112 @@
+import { useState } from 'react'
 import {
-  Button,
   Heading,
-  ListItem,
-  Paragraph,
   Spinner,
-  UnorderedList,
   Pane,
-  majorScale
+  majorScale,
+  toaster,
+  TextInput,
+  minorScale
 } from 'evergreen-ui'
 import { trpc } from 'lib/trpc'
 import Center from 'components/CenterPage'
+import ToDoItem from 'views/ToDo/ToDoItem'
 
-export default function ListTodos() {
-  function handleDelete() {}
-  function updateTodo() {}
+export default () => {
+  const [newTodo, setNewTodo] = useState('')
+  const utils = trpc.useUtils()
+  const invalidateTodos = utils.todo.list.invalidate
 
-  const response = trpc.todo.list.useQuery()
-  const deleteMutation = trpc.todo.delete.useMutation()
-  const updateMutation = trpc.todo.update.useMutation()
-  const trpcContext = trpc.useContext()
+  const { data: todos, isError, isLoading } = trpc.todo.list.useQuery()
+  const create = trpc.todo.create.useMutation({
+    onSuccess: async () => await invalidateTodos()
+  })
 
-  if (response.isError) {
-    return <Heading>Error...</Heading>
+  const addItem = (title: string) => create.mutateAsync({ title })
+
+  if (isError) {
+    toaster.danger('Error fetching todo list. Please try again.')
+    return (
+      <Center>
+        <Heading>Something went wrong.</Heading>
+      </Center>
+    )
   }
 
-  if (response.isLoading) {
-    return <Spinner />
+  if (isLoading) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    )
   }
 
   return (
-    <Center>
-      <Heading>TODO</Heading>
+    <Center background="tint1" justifyContent="flex-start">
       <Pane
-        height="100%"
-        maxWidth={majorScale(100)}
+        maxWidth={majorScale(200)}
         padding={majorScale(2)}
+        minHeight={majorScale(40)}
       >
-        {response.data.map((todo) => (
-          <Pane key={todo.id}>
-            <Paragraph>{todo.title}</Paragraph>
-            <Button
-              onClick={() =>
-                updateMutation.mutate(
-                  { id: todo.id, isCompleted: !todo.isCompleted },
-                  { onSuccess: () => trpcContext.todo.list.invalidate() }
-                )
+        <Heading
+          size={800}
+          fontWeight={500}
+          textTransform="uppercase"
+          textAlign="center"
+          marginBottom={majorScale(1)}
+        >
+          Todo
+        </Heading>
+        {todos.map((todo) => {
+          if (todo.isCompleted) return null
+          return <ToDoItem todo={todo} />
+        })}
+        <Pane display="flex" width={majorScale(50)} justifyContent="center">
+          <TextInput
+            marginTop={majorScale(1)}
+            width="100%"
+            marginX={majorScale(2)}
+            placeholder="Add item..."
+            value={newTodo}
+            onChange={(e: { currentTarget: { value: string } }) =>
+              setNewTodo(e.currentTarget.value)
+            }
+            onKeyDown={async (e: {
+              key: string
+              currentTarget: { value: string }
+            }) => {
+              if (e.key === 'Enter') {
+                await addItem(newTodo)
+                setNewTodo('')
               }
-            >
-              {todo.isCompleted ? 'Complete' : 'Incomplete'}
-            </Button>
-            <Button
-              onClick={() =>
-                deleteMutation.mutate(
-                  { id: todo.id },
-                  {
-                    onSuccess: () => {
-                      trpcContext.todo.list.invalidate()
-                    }
-                  }
-                )
-              }
-            ></Button>
-          </Pane>
-        ))}
+            }}
+          />
+        </Pane>
       </Pane>
+      <Pane
+        display="flex"
+        gap={majorScale(2)}
+        justifyContent="space-between"
+        width={majorScale(50)}
+        marginTop={majorScale(3)}
+      ></Pane>
+      {todos.some((todo) => todo.isCompleted) && (
+        <>
+          <Heading
+            size={800}
+            fontWeight={500}
+            textTransform="uppercase"
+            textAlign="center"
+            marginBottom={majorScale(1)}
+          >
+            Completed
+          </Heading>
+          {todos.map((todo) => {
+            if (!todo.isCompleted) return null
+            return <ToDoItem todo={todo} strikeThrough />
+          })}
+        </>
+      )}
     </Center>
   )
 }
