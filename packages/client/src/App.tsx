@@ -18,11 +18,8 @@ function App() {
           <Routes>
             <Route path="/" element={<ProtectedRoute element={Home} />} />
             <Route path="/login" element={<Login />} />
-            <Route
-              path="/todo"
-              element={<ProtectedRoute element={ToDo} />}
-            />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/todo" element={<ProtectedRoute element={ToDo} />} />
+            <Route path="*" element={<ProtectedRoute element={NotFound} />} />
           </Routes>
         </Router>
       </QueryClientProvider>

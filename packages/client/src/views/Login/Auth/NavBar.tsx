@@ -51,23 +51,24 @@ export default () => {
             About
           </Heading>
         </Button>
-        { user && <Button
-          cursor="pointer"
-          appearance="minimal"
-          padding={majorScale(1)}
-          onClick={() => navigate('/todo')}
-          intent='success'
-        >
-          <Heading
-            size={500}
-            textTransform="uppercase"
-            fontWeight={500}
-            letterSpacing={0.4}
-            color='success'
+        {user && (
+          <Button
+            cursor="pointer"
+            appearance="minimal"
+            padding={majorScale(1)}
+            onClick={() => navigate('/todo')}
           >
-            Example
-          </Heading>
-        </Button>}
+            <Heading
+              size={500}
+              textTransform="uppercase"
+              fontWeight={400}
+              letterSpacing={0.4}
+              color="#51BD94"
+            >
+              CRUD Example
+            </Heading>
+          </Button>
+        )}
       </Pane>
       <Pane display="flex" gap={majorScale(2)}>
         {user ? (

@@ -10,7 +10,6 @@ import {
   Popover,
   Position
 } from 'evergreen-ui'
-import { useNavigate } from 'react-router-dom'
 
 type SignUpButtonProps = {
   isOpen: boolean
@@ -21,14 +20,12 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const navigate = useNavigate()
   const utils = trpc.useUtils()
 
   const signUp = trpc.auth.signUp.useMutation({
     onSuccess: async () => {
       await utils.auth.getUser.invalidate()
       toaster.success('Sign-up successful!')
-      navigate('/todo')
     },
     onError: (error) => {
       console.error(error)
@@ -37,13 +34,12 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
       } else {
         toaster.danger('Sign-up failed, please try again.')
       }
-    },
+    }
   })
 
   const handleSignUp = async () => {
     if (password !== confirmPassword) {
-      toaster.danger('Passwords do not match.')
-      return
+      return toaster.danger('Passwords do not match.')
     }
     await signUp.mutateAsync({ email, password })
     setIsOpen(false)
@@ -96,11 +92,16 @@ export default function SignUpButton({ isOpen, setIsOpen }: SignUpButtonProps) {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setConfirmPassword(e.target.value)
             }
+            onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => {
+              if (e.key === 'Enter') {
+                await handleSignUp()
+              }
+            }}
           />
           <Button
             appearance="primary"
             intent="success"
-            onClick={handleSignUp}
+            onClick={async () => await handleSignUp()}
             isLoading={signUp.isLoading}
             width="100%"
           >

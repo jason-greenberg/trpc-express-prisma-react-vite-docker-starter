@@ -102,7 +102,7 @@ export default ({ isShown, setIsShown }: Props) => (
           </Pane>
           <Pane>
             <Heading size={500} fontWeight={400}>
-              Example ToDo List
+              Example CRUD Feature
             </Heading>
             <UnorderedList>
               <ListItem>

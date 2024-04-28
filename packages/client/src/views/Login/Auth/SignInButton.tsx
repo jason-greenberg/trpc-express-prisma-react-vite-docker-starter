@@ -10,8 +10,6 @@ import {
   Popover,
   Position
 } from 'evergreen-ui'
-import { useNavigate } from 'react-router-dom'
-import { useQueryClient } from '@tanstack/react-query'
 
 type SignInButtonProps = {
   isOpen: boolean
@@ -21,14 +19,12 @@ type SignInButtonProps = {
 export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const navigate = useNavigate()
   const utils = trpc.useUtils()
 
   const signIn = trpc.auth.signIn.useMutation({
     onSuccess: async () => {
       await utils.auth.getUser.invalidate()
       toaster.success('Sign-in successful!')
-      return navigate('/todo')
     },
     onError: (error) => {
       console.error(error)
@@ -80,11 +76,16 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setPassword(e.target.value)
             }
+            onKeyDown={async (e: React.KeyboardEvent<HTMLInputElement>) => {
+              if (e.key === 'Enter') {
+                await handleSignIn()
+              }
+            }}
           />
           <Button
             appearance="primary"
             intent="success"
-            onClick={handleSignIn}
+            onClick={async () => await handleSignIn()}
             isLoading={signIn.isLoading}
             width="100%"
           >
