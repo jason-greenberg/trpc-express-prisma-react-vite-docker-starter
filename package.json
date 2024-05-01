@@ -5,6 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "build": "yarn workspace server build && yarn workspace client build",
     "dev": "yarn workspaces run dev",
     "develop": "docker-compose up --build",
     "prisma:migrate:dev": "docker-compose exec server npx prisma migrate dev",

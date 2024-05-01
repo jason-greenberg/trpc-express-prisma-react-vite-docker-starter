@@ -2,17 +2,17 @@
 echo "Checking types"
 START=$(date +%s.%N)
 
-(cd packages/client && tsc --incremental --noEmit && echo "✅ Client") &
-CLIENT_PID=$!
-
 (cd packages/server && tsc --incremental --noEmit && echo "✅ Server") &
 SERVER_PID=$!
 
-wait $CLIENT_PID
-CLIENT_EXIT_CODE=$?
+(cd packages/client && tsc --incremental --noEmit && echo "✅ Client") &
+CLIENT_PID=$!
 
 wait $SERVER_PID
 SERVER_EXIT_CODE=$?
+
+wait $CLIENT_PID
+CLIENT_EXIT_CODE=$?
 
 END=$(date +%s.%N)
 DIFF=$(echo "$END - $START" | bc)

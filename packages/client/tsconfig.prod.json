@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist/client",
+    "noEmit": false,
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "include": ["src/**/*"]
+  }
+}

@@ -9,8 +9,8 @@ export default ({ mode }) => {
     plugins: [react()],
     resolve: {
       alias: {
-        server: path.resolve(__dirname, '../../server'),
-        'server/*': path.resolve(__dirname, '../../server/*'),
+        server: path.resolve(__dirname, '../server'),
+        'server/*': path.resolve(__dirname, '../server/*'),
         components: path.resolve(__dirname, './src/components'),
         lib: path.resolve(__dirname, './src/lib'),
         assets: path.resolve(__dirname, './src/assets'),
@@ -21,6 +21,17 @@ export default ({ mode }) => {
     },
     server: {
       port: parseInt(process.env.VITE_CLIENT_PORT)
+    },
+    build: {
+      outDir: path.resolve(__dirname, '../../dist/client'),
+      emptyOutDir: true,
+      rollupOptions: {
+        output: {
+          assetFileNames: 'assets/[name].[ext]',
+          chunkFileNames: 'chunks/[name].js',
+          entryFileNames: 'entry/[name].js',
+        },
+      },
     }
   })
 }
