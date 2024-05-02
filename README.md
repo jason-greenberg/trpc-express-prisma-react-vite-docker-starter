@@ -1,4 +1,4 @@
-# 🚀 tRPC-Express-Prisma-React-Vite Starter
+# 🚀 tRPC-Express-Prisma-React-Vite-Docker Starter
 
 A turn-key starter skeleton for a full-stack application built with tRPC, Express, Prisma, React, and Vite, containerized with Docker.
 
@@ -19,12 +19,12 @@ A turn-key starter skeleton for a full-stack application built with tRPC, Expres
 
 1. Clone the repository:
    ```
-   git clone https://github.com/jason-greenberg/trpc-express-prisma-react-vite-starter
+   git clone https://github.com/jason-greenberg/trpc-express-prisma-react-vite-docker-starter.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd trpc-express-prisma-react-vite-starter
+   cd trpc-express-prisma-react-vite-docker-starter
    ```
 
 3. Copy the `.env.example` file to `.env` and update the necessary environment variables.
