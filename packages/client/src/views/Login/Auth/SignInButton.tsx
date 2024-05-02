@@ -24,7 +24,7 @@ export default function SignInButton({ isOpen, setIsOpen }: SignInButtonProps) {
   const signIn = trpc.auth.signIn.useMutation({
     onSuccess: async () => {
       await utils.auth.getUser.invalidate()
-      toaster.success('Sign-in successful!')
+      toaster.success('Sign-in successful!', { duration: 2 })
     },
     onError: (error) => {
       console.error(error)
