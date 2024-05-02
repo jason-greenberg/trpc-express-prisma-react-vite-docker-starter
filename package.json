@@ -8,6 +8,7 @@
   "scripts": {
     "build": "yarn workspace server build && yarn workspace client build",
     "develop": "docker-compose up --build",
+    "dev": "yarn workspace client run dev",
     "prisma:migrate:dev": "docker-compose exec server npx prisma migrate dev",
     "typecheck": "bash scripts/typecheck.sh"
   },
