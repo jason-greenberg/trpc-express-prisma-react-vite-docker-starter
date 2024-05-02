@@ -1,8 +1,9 @@
 {
   "name": "trpc-express-prisma-react-vite-starter",
   "version": "1.0.0",
-  "description": "Starter skeleton for a fullstack app with TRPC, Express, Prisma, React, and Vite",
+  "description": "Starter skeleton for a fullstack app with TRPC, Prisma, Vite + React, and Docker",
   "main": "index.js",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "build": "yarn workspace server build && yarn workspace client build",

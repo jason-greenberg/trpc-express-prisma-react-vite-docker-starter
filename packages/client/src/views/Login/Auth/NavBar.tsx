@@ -61,7 +61,7 @@ export default () => {
             <Heading
               size={500}
               textTransform="uppercase"
-              fontWeight={400}
+              fontWeight={500}
               letterSpacing={0.4}
               color="#51BD94"
             >

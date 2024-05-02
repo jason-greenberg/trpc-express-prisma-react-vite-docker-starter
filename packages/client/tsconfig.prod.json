@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/client",
+    "outDir": "../../dist/client",
     "noEmit": false,
-    "typeRoots": ["./node_modules/@types", "./types"],
-    "include": ["src/**/*"]
+    "incremental": true,
+    "tsBuildInfoFile": "../../dist/client/tsconfig.tsbuildinfo"
   }
 }
