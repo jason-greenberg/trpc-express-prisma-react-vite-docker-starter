@@ -2,6 +2,9 @@
 
 A turn-key starter skeleton for a full-stack application built with tRPC, Express, Prisma, React, and Vite, containerized with Docker.
 
+![Untitled design (1)](https://github.com/jason-greenberg/trpc-express-prisma-react-vite-docker-starter/assets/12382257/ddae8f21-cfd6-4a54-bc25-ebe90704d206)
+
+
 ## ✨ Features
 
 - User management:
@@ -34,6 +37,10 @@ A turn-key starter skeleton for a full-stack application built with tRPC, Expres
    yarn develop
    ```
 
+
+https://github.com/jason-greenberg/trpc-express-prisma-react-vite-docker-starter/assets/12382257/60810ae2-e602-40b2-bbf3-33c979691d80
+
+
 5. Access the application at `http://localhost:5173` or your `VITE_APP_URL` if set differently in your `.env`
 
 ## 🛠️ Development
@@ -48,9 +55,9 @@ A turn-key starter skeleton for a full-stack application built with tRPC, Expres
   yarn typecheck
   ```
 
-## 📦 Build
+## 📦 Production Build
 
-To build the application for production, run:
+To build the application for production, run the following. This will output a `dist` folder in the project root:
 ```
 yarn build
 ```
