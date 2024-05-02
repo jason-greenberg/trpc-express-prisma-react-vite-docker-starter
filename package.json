@@ -7,15 +7,14 @@
   "private": true,
   "scripts": {
     "build": "yarn workspace server build && yarn workspace client build",
-    "dev": "yarn workspaces run dev",
     "develop": "docker-compose up --build",
     "prisma:migrate:dev": "docker-compose exec server npx prisma migrate dev",
     "typecheck": "bash scripts/typecheck.sh"
   },
   "workspaces": {
     "packages": [
-      "./packages/client",
-      "./packages/server"
+      "./packages/server",
+      "./packages/client"
     ]
   }
 }
